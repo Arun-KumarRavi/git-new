@@ -1,0 +1,26 @@
+version: '3.8'
+ 
+services:
+ 
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+ 
+  backend:
+    build:
+      context: ./flask-integration
+      dockerfile: Dockerfile
+    container_name: flask-backend
+    ports:
+      - "5000:5000"
