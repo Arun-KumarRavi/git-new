@@ -21,27 +21,20 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            parallel {
-
-                stage('Frontend Install') {
-                    steps {
-                        dir('client') {
-                            sh 'npm ci'
-                        }
-                    }
+            steps {
+                // Frontend install
+                dir('client') {
+                    sh 'npm ci'
                 }
-
-                stage('Backend Install') {
-    steps {
-        dir('flask-integration') {
-            sh '''
-            python3 -m venv venv
-            venv/bin/pip install --upgrade pip
-            venv/bin/pip install -r requirements.txt
-            '''
-        }
-    }
-}            }
+                // Backend install
+                dir('flask-integration') {
+                    sh '''
+                    python3 -m venv venv
+                    venv/bin/pip install --upgrade pip
+                    venv/bin/pip install -r requirements.txt
+                    '''
+                }
+            }
         }
 
         stage('Code Quality & Tests') {
