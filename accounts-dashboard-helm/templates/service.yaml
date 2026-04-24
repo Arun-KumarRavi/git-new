@@ -1,0 +1,34 @@
+# Client Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-client-svc
+  labels:
+    app: accounts-dashboard-client
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.clientPort }}
+      targetPort: {{ .Values.containerPort.client }}
+      protocol: TCP
+      name: http
+  selector:
+    app: accounts-dashboard-client
+
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-backend-svc
+  labels:
+    app: accounts-dashboard-backend
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.backendPort }}
+      targetPort: {{ .Values.containerPort.backend }}
+      protocol: TCP
+      name: http
+  selector:
+    app: accounts-dashboard-backend

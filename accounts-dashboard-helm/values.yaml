@@ -1,0 +1,37 @@
+# Default values for accounts-dashboard-helm.
+
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  # Overridden during deployment via --set client.image.tag=$IMAGE_TAG
+  client:
+    repository: arunkumarravi08/accounts-dashboard-client
+    tag: latest
+  backend:
+    repository: arunkumarravi08/accounts-dashboard-backend
+    tag: latest
+
+service:
+  type: LoadBalancer
+  clientPort: 80
+  backendPort: 5000
+
+# Container ports
+containerPort:
+  client: 3000
+  backend: 5000
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
